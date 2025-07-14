@@ -1,0 +1,30 @@
+Prompt 2.2: React Native SDK (In-App Messages)
+Goal: Add in-app message display to RN SDK.
+Requirements:
+
+Native modal appearance
+Smooth animations
+Accessibility support
+Plain JavaScript implementation
+
+Deliverables:
+
+src/components/InAppModal.js:
+
+Clean, native-feeling design
+Swipe-to-dismiss support
+Animation using Animated API
+No external UI libraries
+
+
+Update src/index.js:
+
+NotifyLight.checkForMessages() - manual check
+NotifyLight.enableAutoCheck(interval) - auto-polling
+NotifyLight.onMessageDisplayed(handler) - analytics hook
+
+
+Styling configuration options (plain objects)
+Usage example with custom styling
+
+Testing: Provide test message payloads, styling examples.

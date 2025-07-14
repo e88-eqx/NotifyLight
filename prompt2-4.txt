@@ -1,0 +1,32 @@
+Prompt 2.4: Swift iOS SDK (In-App Messages)
+Goal: Add native iOS in-app message UI.
+Requirements:
+
+Native iOS design language
+SwiftUI and UIKit support
+Haptic feedback
+Dynamic Type support
+
+Deliverables:
+
+InAppMessageViewController.swift:
+
+Blurred background effect
+Native iOS modal presentation
+Gesture recognizers for dismissal
+
+
+InAppMessageView.swift (SwiftUI):
+
+Modern SwiftUI implementation
+Environment-aware styling
+
+
+Update main SDK:
+
+NotifyLight.checkForMessages()
+NotifyLight.presentMessage()
+Customization options
+
+
+Usage examples for both UIKit and SwiftUI apps

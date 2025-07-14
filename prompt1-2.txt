@@ -1,0 +1,46 @@
+Prompt 1.2: SQLite Database Integration & Device Token Management
+Goal: Add SQLite for device tokens and delivery logs.
+Requirements:
+
+Database file: data/notifylight.db (persistent volume in Docker)
+Auto-create tables on startup
+Handle token conflicts gracefully
+
+Database Schema:
+sql-- devices table
+id TEXT PRIMARY KEY,
+token TEXT NOT NULL UNIQUE,
+platform TEXT NOT NULL CHECK(platform IN ('ios', 'android')),
+userId TEXT NOT NULL,
+createdAt INTEGER NOT NULL,
+updatedAt INTEGER NOT NULL
+
+-- delivery_logs table  
+id TEXT PRIMARY KEY,
+notificationId TEXT NOT NULL,
+deviceToken TEXT NOT NULL,
+status TEXT NOT NULL CHECK(status IN ('sent', 'failed')),
+errorMessage TEXT,
+timestamp INTEGER NOT NULL
+Deliverables:
+
+Update package.json with sqlite3 and uuid dependencies
+src/db.js with:
+
+initDb() - creates tables with proper indexes
+addDevice(token, platform, userId) - upsert logic
+getDevices(userIds) - supports ["all"] or specific IDs
+logDelivery(notificationId, deviceToken, status, errorMessage)
+Proper error handling and connection pooling
+
+
+Update src/server.js:
+
+Initialize DB on startup
+Add POST /register-device endpoint with validation
+Update /notify to fetch devices (still just logging)
+
+
+Update docker-compose.yml to mount ./data:/app/data volume
+
+Testing: SQL queries to verify data, curl commands for device registration.

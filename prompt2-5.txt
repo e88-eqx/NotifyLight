@@ -1,0 +1,212 @@
+Prompt 2.5: Test Applications for SDK Verification
+Goal: Create fully functional test applications for both React Native and native iOS to verify SDK integration and demonstrate the "2-hour implementation" promise.
+Requirements:
+
+Complete, runnable apps (not just snippets)
+Support both simulator and physical device testing
+Clear UI to trigger and verify all features
+Detailed setup instructions for Xcode and Android Studio
+Handle all edge cases and error scenarios
+
+Test App Features:
+
+Register device for push notifications
+Display current device token
+Send test push notification
+Check for in-app messages
+Show delivery logs
+Test error scenarios
+Network status indicator
+
+
+Part A: React Native Test App
+Deliverables:
+
+Complete React Native app in test-apps/react-native/:
+NotifyLightTestRN/
+├── App.js
+├── package.json
+├── ios/
+│   ├── NotifyLightTestRN.xcodeproj
+│   ├── NotifyLightTestRN/
+│   │   ├── AppDelegate.m
+│   │   └── Info.plist
+│   └── Podfile
+├── android/
+│   ├── app/
+│   │   ├── build.gradle
+│   │   └── src/main/
+│   │       ├── AndroidManifest.xml
+│   │       └── java/com/notifylighttest/
+│   └── settings.gradle
+└── README.md
+
+App.js with complete test interface:
+javascript// Full UI with:
+// - Status indicators (connected, registered, etc.)
+// - Buttons for each SDK function
+// - Log display for debugging
+// - Settings panel for API key and server URL
+// - Token display and copy functionality
+
+Platform-specific configuration files:
+
+iOS: Proper push notification capabilities in Xcode project
+Android: FCM configuration in build.gradle
+
+
+README.md with:
+
+Prerequisites checklist
+Step-by-step setup for both platforms
+Common issues and solutions
+Testing checklist
+
+
+
+
+Part B: Native iOS Test App (Swift)
+Deliverables:
+
+Complete iOS app in test-apps/ios-native/:
+NotifyLightTestiOS/
+├── NotifyLightTestiOS.xcodeproj
+├── NotifyLightTestiOS/
+│   ├── AppDelegate.swift
+│   ├── SceneDelegate.swift
+│   ├── ContentView.swift (SwiftUI)
+│   ├── MainViewController.swift (UIKit alternative)
+│   ├── Info.plist
+│   └── Assets.xcassets
+├── Podfile
+└── README.md
+
+ContentView.swift with SwiftUI interface:
+
+Clean, native iOS design
+Settings stored in UserDefaults
+Push permission status display
+In-app message preview
+Debug console
+
+
+Xcode project configuration:
+
+Push Notifications capability enabled
+Background Modes configured
+Proper bundle identifier
+Development team placeholder
+
+
+README.md specific to iOS development
+
+
+Part C: Test Utilities
+Deliverables:
+
+test-apps/utilities/test-server.js:
+javascript// Local mock server for testing without Docker
+// Simulates NotifyLight backend responses
+// Useful for SDK development
+
+test-apps/utilities/push-tester.sh:
+bash#!/bin/bash
+# Script to send test notifications
+# Includes various payload examples
+# Tests error scenarios
+
+test-apps/utilities/setup-certificates.md:
+
+Visual guide for APNs setup in Apple Developer Portal
+FCM setup in Firebase Console
+Where to place certificate files
+How to convert between certificate formats
+
+
+
+
+Part D: Android Studio Configuration
+Deliverables:
+
+test-apps/docs/ANDROID_STUDIO_SETUP.md:
+
+Installing Android Studio on macOS
+Creating AVD with Play Services
+Recommended emulator settings
+USB debugging setup for physical devices
+Network configuration for localhost access
+
+
+Android-specific test features in React Native app:
+
+FCM token display
+Direct FCM test without backend
+Notification channel management
+Permission request flow
+
+
+
+
+Part E: Testing Procedures
+Deliverables:
+
+test-apps/docs/TESTING_GUIDE.md with:
+
+Simulator Testing (iOS/Android)
+
+What works and what doesn't
+Workarounds for push notifications
+
+
+Physical Device Testing
+
+Requirements for each platform
+Network configuration (localhost access)
+
+
+Test Scenarios Checklist:
+
+ Fresh install flow
+ Token registration
+ Push notification (foreground)
+ Push notification (background)
+ Push notification (app killed)
+ In-app message display
+ Offline/online transitions
+ API key validation
+ Server unreachable
+ Token refresh
+
+
+Performance Benchmarks:
+
+SDK initialization time
+Token registration time
+Message display latency
+
+
+
+
+test-apps/docs/TROUBLESHOOTING.md:
+
+Common Xcode errors and fixes
+Android build issues
+Certificate problems
+Network/firewall issues
+Simulator limitations
+
+
+
+Testing Requirements:
+
+Apps must clearly show whether features are working
+All errors must be visible in the UI (not just console)
+Include version numbers for debugging
+Ability to reset/clear all data
+
+Success Criteria:
+
+Developer can go from zero to receiving notifications in under 2 hours
+All features are testable without reading source code
+Clear indication when something isn't working
+Works on macOS with Xcode and Android Studio

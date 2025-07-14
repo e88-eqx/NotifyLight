@@ -1,0 +1,36 @@
+Prompt 1.3: Core Notification Logic (APNs/FCM)
+Goal: Implement actual push notification sending.
+Requirements:
+
+Immediate send only (no scheduling)
+Text-only notifications
+Basic retry logic (3 attempts)
+Proper error handling and logging
+
+Environment Variables:
+
+APNS_KEY_ID, APNS_TEAM_ID, APNS_KEY_PATH (for .p8 file)
+FCM_PROJECT_ID, FCM_PRIVATE_KEY, FCM_CLIENT_EMAIL
+
+Deliverables:
+
+Update package.json: add apn, firebase-admin
+Update .env.example with all push credentials
+src/services/pushService.js:
+
+Initialize APNs/FCM providers with error handling
+sendPushNotification(device, payload) with retry logic
+Proper payload formatting for each platform
+Connection pooling and cleanup
+
+
+Update src/server.js:
+
+Complete /notify endpoint implementation
+Batch processing with concurrency limit
+Response with detailed success/failure counts
+
+
+src/utils/validator.js for payload validation
+
+Testing: Mock device tokens, test payload examples, error scenarios.

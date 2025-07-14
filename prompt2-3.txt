@@ -1,0 +1,46 @@
+Prompt 2.3: Swift iOS SDK (Core & Push)
+Goal: Create native Swift SDK with modern iOS patterns.
+Requirements:
+
+Swift 5.5+, iOS 13+
+SPM and CocoaPods support
+Direct APNs integration (no Firebase)
+Privacy-focused design
+
+Package Structure:
+NotifyLight/
+├── Sources/NotifyLight/
+│   ├── NotifyLight.swift
+│   ├── Models/
+│   │   ├── Device.swift
+│   │   └── Notification.swift
+│   ├── Networking/
+│   │   ├── APIClient.swift
+│   │   └── URLSession+Extensions.swift
+│   └── Services/
+│       └── APNSService.swift
+├── Package.swift
+├── NotifyLight.podspec
+└── README.md
+Deliverables:
+
+Complete SDK with modern Swift patterns
+NotifyLight.swift with:
+
+NotifyLight.configure(apiKey:userId:)
+NotifyLight.requestPushAuthorization()
+Direct APNs registration and token management
+Background task handling
+
+
+APNSService.swift:
+
+Native UserNotifications framework integration
+Token conversion and management
+
+
+Clean networking layer with URLSession
+Example iOS app integration
+Privacy manifest file (PrivacyInfo.xcprivacy)
+
+Testing: Unit test examples, integration test approach.

@@ -1,0 +1,157 @@
+Prompt 3.1: 10-Minute Quickstart Guide
+Goal: Create the definitive quickstart guide that delivers on the "10-minute" promise.
+Structure:
+markdown# NotifyLight Quickstart - 10 Minutes to First Notification
+
+## Prerequisites (1 minute check)
+- [ ] Docker & Docker Compose
+- [ ] Node.js 16+ (for SDK testing)
+- [ ] Xcode (for iOS) or Android Studio
+- [ ] APNs/FCM credentials ready
+
+## 1. Deploy Backend (2 minutes)
+```bash
+git clone https://github.com/notifylight/notifylight
+cd notifylight
+cp .env.example .env
+# Edit .env with your API_KEY
+docker-compose up -d
+# Expected: "NotifyLight is running on port 3000"
+2. Quick Credential Setup (2 minutes)
+[Copy-paste ready examples for APNs and FCM]
+3. Mobile Integration (3 minutes)
+[Side-by-side RN and Swift examples]
+4. Send Test Notifications (1 minute)
+[Working curl commands]
+5. Verify Success (1 minute)
+[What you should see]
+Monitoring Your Installation
+
+Health check: curl http://localhost:3000/health
+Logs: docker-compose logs -f
+Database: SQLite file at ./data/notifylight.db
+
+Scaling Beyond MVP
+When you outgrow SQLite (>10K devices), our Stage 2 PostgreSQL migration guide takes 30 minutes.
+Troubleshooting
+[Common issues with quick fixes]
+
+**Requirements**:
+- Every command must be copy-pasteable
+- Include expected output for each step
+- Time estimates for each section
+- Common gotchas highlighted
+- Success criteria clearly defined
+- Monitoring section included
+
+---
+
+### Prompt 3.2: Setup Verification Script
+
+**Goal**: Bulletproof verification script that catches common setup issues.
+
+**Requirements**:
+- Checks all prerequisites
+- Tests every API endpoint
+- Validates push credentials
+- Pretty, colored output
+- Suggests fixes for failures
+- Monitors health metrics
+
+**Script Features**:
+```bash
+#!/bin/bash
+# setup-verify.sh - NotifyLight Setup Verification
+
+# Features:
+# - Colored output (✅ green, ❌ red, ⚠️ yellow)
+# - Progressive checks (stops on critical failures)
+# - Helpful error messages with fix suggestions
+# - Performance benchmarks
+# - Generates test device tokens
+# - Validates push certificate expiry
+# - Tests actual push delivery (optional)
+# - Monitors health endpoint
+Deliverables:
+
+Complete setup-verify.sh script with:
+
+Dependency checks (curl, jq, docker)
+API endpoint tests with timing
+Database verification
+Push credential validation
+Health metrics check (uptime, memory, device count)
+Rate limit testing
+CORS verification
+Memory/CPU usage check
+Generated test report
+
+
+test-fixtures.json with sample payloads
+Integration with CI/CD example
+
+Output Example:
+NotifyLight Setup Verification v1.0
+==================================
+✅ Docker: Running (24.0.5)
+✅ API Server: Responding (127ms)
+✅ Health Check: Healthy (uptime: 5m, memory: 42MB)
+✅ Database: Connected (SQLite 3.39.0, 0 devices)
+✅ Rate Limiting: Working (100 req/min)
+✅ CORS: Configured correctly
+⚠️  APNs: Certificate expires in 29 days
+✅ FCM: Credentials valid
+✅ All tests passed! Ready to send notifications.
+
+Performance Metrics:
+- API Response Time: 127ms (p95)
+- Memory Usage: 42MB / 256MB
+- Database Size: 12KB
+
+Additional Standards
+Error Handling Standards
+Consistent error response format across all endpoints:
+json{
+  "error": {
+    "code": "INVALID_API_KEY",
+    "message": "API key is missing or invalid",
+    "details": {}
+  }
+}
+Logging Standards
+Structured logging format for easy parsing:
+javascriptconsole.log(JSON.stringify({
+  level: 'info',
+  event: 'notification.sent',
+  notificationId: '...',
+  userId: '...',
+  type: 'push',
+  duration: 127,
+  timestamp: new Date().toISOString()
+}));
+Performance Constraints
+
+API response time: <200ms (p95)
+Memory usage: <256MB
+Concurrent notifications: 1000/second
+SQLite optimization: WAL mode enabled
+
+Monitoring Standards
+Health endpoint returns:
+json{
+  "status": "healthy",
+  "uptime": 300,
+  "memory": {
+    "used": 44040192,
+    "total": 268435456
+  },
+  "database": {
+    "connected": true,
+    "deviceCount": 150,
+    "messageCount": 45
+  },
+  "services": {
+    "apns": "operational",
+    "fcm": "operational"
+  }
+}

@@ -1,0 +1,652 @@
+{
+  "description": "NotifyLight Test Fixtures - Sample payloads for comprehensive testing",
+  "version": "1.0.0",
+  "fixtures": {
+    "device_registration": {
+      "basic_ios": {
+        "description": "Basic iOS device registration",
+        "payload": {
+          "token": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+          "platform": "ios",
+          "user_id": "test-user-ios"
+        },
+        "expected_status": 200
+      },
+      "basic_android": {
+        "description": "Basic Android device registration",
+        "payload": {
+          "token": "dP1kS2cZ3jI:APA91bG7Qz8X9Ry4VcW2NmE5TpH6JuK0OqL1MnF3G8BvCxD9SaE7RtY6UiO5PqA",
+          "platform": "android",
+          "user_id": "test-user-android"
+        },
+        "expected_status": 200
+      },
+      "with_metadata": {
+        "description": "Device registration with additional metadata",
+        "payload": {
+          "token": "test-token-with-metadata",
+          "platform": "ios",
+          "user_id": "test-user-meta",
+          "device_name": "iPhone 14 Pro",
+          "app_version": "1.2.3",
+          "os_version": "16.1"
+        },
+        "expected_status": 200
+      },
+      "invalid_missing_token": {
+        "description": "Invalid registration - missing token",
+        "payload": {
+          "platform": "ios",
+          "user_id": "test-user"
+        },
+        "expected_status": 400
+      },
+      "invalid_missing_platform": {
+        "description": "Invalid registration - missing platform",
+        "payload": {
+          "token": "test-token",
+          "user_id": "test-user"
+        },
+        "expected_status": 400
+      }
+    },
+    "push_notifications": {
+      "basic_push": {
+        "description": "Basic push notification",
+        "payload": {
+          "title": "Basic Test Notification",
+          "message": "This is a basic test notification message",
+          "users": ["test-user"],
+          "type": "push"
+        },
+        "expected_status": 200
+      },
+      "rich_push": {
+        "description": "Rich push notification with custom data",
+        "payload": {
+          "title": "Rich Notification 📱",
+          "message": "This notification includes custom data and emoji support",
+          "users": ["test-user"],
+          "type": "push",
+          "data": {
+            "category": "promotion",
+            "action_url": "https://example.com/promo",
+            "expires_at": "2024-12-31T23:59:59Z",
+            "priority": "high"
+          }
+        },
+        "expected_status": 200
+      },
+      "multi_user_push": {
+        "description": "Push notification to multiple users",
+        "payload": {
+          "title": "Multi-User Announcement",
+          "message": "This message is sent to multiple users simultaneously",
+          "users": ["user-1", "user-2", "user-3"],
+          "type": "push"
+        },
+        "expected_status": 200
+      },
+      "silent_push": {
+        "description": "Silent push notification",
+        "payload": {
+          "title": "",
+          "message": "",
+          "users": ["test-user"],
+          "type": "push",
+          "data": {
+            "silent": true,
+            "background_sync": true,
+            "update_type": "content_refresh"
+          }
+        },
+        "expected_status": 200
+      },
+      "priority_push": {
+        "description": "High priority push notification",
+        "payload": {
+          "title": "🚨 Urgent Alert",
+          "message": "This is a high-priority notification that should be delivered immediately",
+          "users": ["test-user"],
+          "type": "push",
+          "data": {
+            "priority": "high",
+            "sound": "urgent.wav",
+            "vibrate": true
+          }
+        },
+        "expected_status": 200
+      },
+      "invalid_missing_content": {
+        "description": "Invalid push - missing title and message",
+        "payload": {
+          "users": ["test-user"],
+          "type": "push"
+        },
+        "expected_status": 400
+      },
+      "invalid_empty_users": {
+        "description": "Invalid push - empty users array",
+        "payload": {
+          "title": "Test",
+          "message": "Test message",
+          "users": [],
+          "type": "push"
+        },
+        "expected_status": 400
+      }
+    },
+    "in_app_messages": {
+      "basic_message": {
+        "description": "Basic in-app message",
+        "payload": {
+          "title": "Welcome to NotifyLight!",
+          "message": "Thanks for using our notification service. This is your first in-app message.",
+          "users": ["test-user"],
+          "type": "in-app"
+        },
+        "expected_status": 200
+      },
+      "message_with_actions": {
+        "description": "In-app message with action buttons",
+        "payload": {
+          "title": "Update Available",
+          "message": "A new version of the app is available. Would you like to update now?",
+          "users": ["test-user"],
+          "type": "in-app",
+          "actions": [
+            {
+              "id": "update_now",
+              "title": "Update Now",
+              "style": "primary"
+            },
+            {
+              "id": "remind_later",
+              "title": "Remind Me Later",
+              "style": "secondary"
+            },
+            {
+              "id": "skip_version",
+              "title": "Skip This Version",
+              "style": "destructive"
+            }
+          ]
+        },
+        "expected_status": 200
+      },
+      "message_with_expiry": {
+        "description": "In-app message with expiration",
+        "payload": {
+          "title": "Limited Time Offer! 🎉",
+          "message": "Get 50% off your next purchase. This offer expires in 24 hours!",
+          "users": ["test-user"],
+          "type": "in-app",
+          "data": {
+            "expires_at": "2024-12-31T23:59:59Z",
+            "offer_code": "SAVE50",
+            "discount_percent": 50
+          },
+          "actions": [
+            {
+              "id": "claim_offer",
+              "title": "Claim Offer",
+              "style": "primary"
+            },
+            {
+              "id": "no_thanks",
+              "title": "No Thanks",
+              "style": "secondary"
+            }
+          ]
+        },
+        "expected_status": 200
+      },
+      "survey_message": {
+        "description": "Survey-style in-app message",
+        "payload": {
+          "title": "Quick Feedback",
+          "message": "How would you rate your experience with NotifyLight?",
+          "users": ["test-user"],
+          "type": "in-app",
+          "actions": [
+            {
+              "id": "excellent",
+              "title": "⭐⭐⭐⭐⭐ Excellent",
+              "style": "primary"
+            },
+            {
+              "id": "good",
+              "title": "⭐⭐⭐⭐ Good",
+              "style": "secondary"
+            },
+            {
+              "id": "average",
+              "title": "⭐⭐⭐ Average",
+              "style": "secondary"
+            },
+            {
+              "id": "poor",
+              "title": "⭐⭐ Needs Work",
+              "style": "secondary"
+            }
+          ],
+          "data": {
+            "survey_id": "feedback_2024_q1",
+            "category": "user_experience"
+          }
+        },
+        "expected_status": 200
+      },
+      "onboarding_message": {
+        "description": "Onboarding-style message with rich formatting",
+        "payload": {
+          "title": "Welcome to the Future of Notifications! 🚀",
+          "message": "NotifyLight gives you complete control over your notification infrastructure. Here's what you can do:\n\n• Send push notifications to iOS and Android\n• Create rich in-app messages\n• Track delivery and engagement\n• Scale to millions of users\n\nLet's get started!",
+          "users": ["new-user"],
+          "type": "in-app",
+          "actions": [
+            {
+              "id": "start_tour",
+              "title": "Start Tour",
+              "style": "primary"
+            },
+            {
+              "id": "skip_tour",
+              "title": "Skip for Now",
+              "style": "secondary"
+            }
+          ],
+          "data": {
+            "onboarding_step": 1,
+            "user_type": "new",
+            "show_animation": true
+          }
+        },
+        "expected_status": 200
+      }
+    },
+    "api_validation": {
+      "health_check": {
+        "description": "Server health check",
+        "endpoint": "/health",
+        "method": "GET",
+        "headers": {},
+        "expected_status": 200,
+        "expected_fields": ["status", "uptime", "version"]
+      },
+      "stats_check": {
+        "description": "Server statistics (requires API key)",
+        "endpoint": "/stats",
+        "method": "GET",
+        "headers": {
+          "X-API-Key": "test-api-key"
+        },
+        "expected_status": 200,
+        "expected_fields": ["success", "stats"]
+      },
+      "api_key_validation": {
+        "description": "API key validation",
+        "endpoint": "/validate",
+        "method": "GET",
+        "headers": {
+          "X-API-Key": "test-api-key"
+        },
+        "expected_status": 200,
+        "expected_fields": ["success", "message"]
+      },
+      "invalid_api_key": {
+        "description": "Invalid API key test",
+        "endpoint": "/validate",
+        "method": "GET",
+        "headers": {
+          "X-API-Key": "invalid-key"
+        },
+        "expected_status": 401,
+        "expected_fields": ["success", "message"]
+      },
+      "missing_api_key": {
+        "description": "Missing API key test",
+        "endpoint": "/validate",
+        "method": "GET",
+        "headers": {},
+        "expected_status": 401,
+        "expected_fields": ["success", "message"]
+      }
+    },
+    "message_retrieval": {
+      "get_user_messages": {
+        "description": "Retrieve messages for a user",
+        "endpoint": "/messages/test-user",
+        "method": "GET",
+        "headers": {
+          "X-API-Key": "test-api-key"
+        },
+        "expected_status": 200,
+        "expected_fields": ["success", "messages", "count"]
+      },
+      "get_user_messages_active_only": {
+        "description": "Retrieve only active messages for a user",
+        "endpoint": "/messages/test-user?active=true",
+        "method": "GET",
+        "headers": {
+          "X-API-Key": "test-api-key"
+        },
+        "expected_status": 200,
+        "expected_fields": ["success", "messages", "count"]
+      },
+      "get_nonexistent_user": {
+        "description": "Retrieve messages for non-existent user",
+        "endpoint": "/messages/nonexistent-user",
+        "method": "GET",
+        "headers": {
+          "X-API-Key": "test-api-key"
+        },
+        "expected_status": 200,
+        "expected_response": {
+          "success": true,
+          "messages": [],
+          "count": 0
+        }
+      }
+    },
+    "test_data": {
+      "create_test_messages": {
+        "description": "Create test messages for testing",
+        "payload": {
+          "userId": "test-user",
+          "count": 5
+        },
+        "expected_status": 200
+      },
+      "create_single_test_message": {
+        "description": "Create single test message",
+        "payload": {
+          "userId": "test-user",
+          "count": 1
+        },
+        "expected_status": 200
+      },
+      "create_many_test_messages": {
+        "description": "Create many test messages",
+        "payload": {
+          "userId": "load-test-user",
+          "count": 10
+        },
+        "expected_status": 200
+      },
+      "clear_test_data": {
+        "description": "Clear all test data",
+        "endpoint": "/test/clear",
+        "method": "POST",
+        "headers": {
+          "X-API-Key": "test-api-key"
+        },
+        "expected_status": 200,
+        "expected_fields": ["success", "message"]
+      }
+    },
+    "error_scenarios": {
+      "malformed_json": {
+        "description": "Malformed JSON payload",
+        "payload": "{invalid json}",
+        "expected_status": 400
+      },
+      "oversized_payload": {
+        "description": "Oversized payload test",
+        "payload": {
+          "title": "Test",
+          "message": "A".repeat(10000),
+          "users": ["test-user"],
+          "type": "push"
+        },
+        "expected_status": 400
+      },
+      "sql_injection_attempt": {
+        "description": "SQL injection attempt in user ID",
+        "payload": {
+          "title": "Test",
+          "message": "Test message",
+          "users": ["'; DROP TABLE devices; --"],
+          "type": "push"
+        },
+        "expected_status": 200
+      },
+      "xss_attempt": {
+        "description": "XSS attempt in message content",
+        "payload": {
+          "title": "<script>alert('xss')</script>",
+          "message": "<img src=x onerror=alert('xss')>",
+          "users": ["test-user"],
+          "type": "push"
+        },
+        "expected_status": 200
+      }
+    },
+    "performance_test": {
+      "concurrent_notifications": {
+        "description": "Test data for concurrent notification sending",
+        "payloads": [
+          {
+            "title": "Concurrent Test 1",
+            "message": "Testing concurrent delivery",
+            "users": ["perf-user-1"],
+            "type": "push"
+          },
+          {
+            "title": "Concurrent Test 2", 
+            "message": "Testing concurrent delivery",
+            "users": ["perf-user-2"],
+            "type": "push"
+          },
+          {
+            "title": "Concurrent Test 3",
+            "message": "Testing concurrent delivery", 
+            "users": ["perf-user-3"],
+            "type": "push"
+          }
+        ],
+        "expected_status": 200
+      },
+      "bulk_device_registration": {
+        "description": "Bulk device registration for performance testing",
+        "payloads": [
+          {
+            "token": "perf-token-001",
+            "platform": "ios",
+            "user_id": "perf-user-001"
+          },
+          {
+            "token": "perf-token-002", 
+            "platform": "android",
+            "user_id": "perf-user-002"
+          },
+          {
+            "token": "perf-token-003",
+            "platform": "ios", 
+            "user_id": "perf-user-003"
+          }
+        ],
+        "expected_status": 200
+      }
+    }
+  },
+  "test_scenarios": {
+    "basic_workflow": {
+      "description": "Basic end-to-end workflow test",
+      "steps": [
+        {
+          "name": "Health Check",
+          "fixture": "api_validation.health_check"
+        },
+        {
+          "name": "API Key Validation",
+          "fixture": "api_validation.api_key_validation"
+        },
+        {
+          "name": "Device Registration",
+          "fixture": "device_registration.basic_ios"
+        },
+        {
+          "name": "Send Push Notification",
+          "fixture": "push_notifications.basic_push"
+        },
+        {
+          "name": "Send In-App Message",
+          "fixture": "in_app_messages.basic_message"
+        },
+        {
+          "name": "Retrieve Messages",
+          "fixture": "message_retrieval.get_user_messages"
+        }
+      ]
+    },
+    "error_handling": {
+      "description": "Error handling and validation test",
+      "steps": [
+        {
+          "name": "Invalid API Key",
+          "fixture": "api_validation.invalid_api_key"
+        },
+        {
+          "name": "Missing API Key",
+          "fixture": "api_validation.missing_api_key"
+        },
+        {
+          "name": "Invalid Device Registration",
+          "fixture": "device_registration.invalid_missing_token"
+        },
+        {
+          "name": "Invalid Notification",
+          "fixture": "push_notifications.invalid_missing_content"
+        }
+      ]
+    },
+    "comprehensive_test": {
+      "description": "Comprehensive functionality test",
+      "steps": [
+        {
+          "name": "Server Health",
+          "fixture": "api_validation.health_check"
+        },
+        {
+          "name": "Clear Previous Data",
+          "fixture": "test_data.clear_test_data"
+        },
+        {
+          "name": "Register iOS Device",
+          "fixture": "device_registration.basic_ios"
+        },
+        {
+          "name": "Register Android Device", 
+          "fixture": "device_registration.basic_android"
+        },
+        {
+          "name": "Send Basic Push",
+          "fixture": "push_notifications.basic_push"
+        },
+        {
+          "name": "Send Rich Push",
+          "fixture": "push_notifications.rich_push"
+        },
+        {
+          "name": "Send Multi-User Push",
+          "fixture": "push_notifications.multi_user_push"
+        },
+        {
+          "name": "Send Basic In-App Message",
+          "fixture": "in_app_messages.basic_message"
+        },
+        {
+          "name": "Send Message with Actions",
+          "fixture": "in_app_messages.message_with_actions"
+        },
+        {
+          "name": "Create Test Messages",
+          "fixture": "test_data.create_test_messages"
+        },
+        {
+          "name": "Retrieve Messages",
+          "fixture": "message_retrieval.get_user_messages"
+        },
+        {
+          "name": "Check Server Stats",
+          "fixture": "api_validation.stats_check"
+        }
+      ]
+    }
+  },
+  "ci_cd_integration": {
+    "github_actions": {
+      "description": "GitHub Actions workflow example",
+      "workflow": {
+        "name": "NotifyLight Verification",
+        "on": ["push", "pull_request"],
+        "jobs": {
+          "verify": {
+            "runs-on": "ubuntu-latest",
+            "steps": [
+              {
+                "name": "Checkout",
+                "uses": "actions/checkout@v3"
+              },
+              {
+                "name": "Start NotifyLight",
+                "run": "docker-compose up -d"
+              },
+              {
+                "name": "Wait for services",
+                "run": "sleep 30"
+              },
+              {
+                "name": "Run verification",
+                "run": "./setup-verify.sh -v -p -o verification-report.txt"
+              },
+              {
+                "name": "Upload report",
+                "uses": "actions/upload-artifact@v3",
+                "with": {
+                  "name": "verification-report",
+                  "path": "verification-report.txt"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "jenkins": {
+      "description": "Jenkins pipeline example",
+      "pipeline": {
+        "pipeline": {
+          "agent": "any",
+          "stages": [
+            {
+              "stage": "Checkout",
+              "steps": {
+                "checkout": "scm"
+              }
+            },
+            {
+              "stage": "Deploy",
+              "steps": {
+                "sh": "docker-compose up -d"
+              }
+            },
+            {
+              "stage": "Verify",
+              "steps": {
+                "sh": "./setup-verify.sh -v -p -o verification-report.txt"
+              }
+            },
+            {
+              "stage": "Archive",
+              "steps": {
+                "archiveArtifacts": "verification-report.txt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

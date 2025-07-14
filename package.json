@@ -1,0 +1,25 @@
+{
+  "name": "notifylight",
+  "version": "1.0.0",
+  "description": "Lightweight, self-hosted notification platform",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": ["notifications", "push", "self-hosted", "open-source"],
+  "author": "NotifyLight Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "express-rate-limit": "^7.1.5",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1",
+    "apn": "^2.2.0",
+    "firebase-admin": "^12.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

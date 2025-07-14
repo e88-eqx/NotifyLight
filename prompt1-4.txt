@@ -1,0 +1,43 @@
+Prompt 1.4: In-App Message Support
+Goal: Add backend support for in-app messages.
+Requirements:
+
+Store messages per user
+Simple pull mechanism (no WebSockets)
+Auto-mark as read on retrieval
+Rate limiting for message creation
+
+Database Schema Addition:
+sql-- in_app_messages table
+id TEXT PRIMARY KEY,
+title TEXT NOT NULL,
+message TEXT NOT NULL,
+userId TEXT NOT NULL,
+status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active', 'read')),
+createdAt INTEGER NOT NULL,
+readAt INTEGER,
+INDEX idx_user_status (userId, status)
+
+-- PostgreSQL Stage 2 note: Add GIN index for full-text search
+Deliverables:
+
+Update src/db.js:
+
+Add table creation for in_app_messages
+createInAppMessage(id, title, message, userId)
+getActiveMessageForUser(userId) - returns oldest unread
+markMessageAsRead(id)
+Add message count to metrics
+
+
+Update src/server.js:
+
+Enhance /notify to support type: "in-app"
+Add GET /messages/:userId endpoint
+Add POST /messages/:messageId/read endpoint
+Separate rate limiter for message creation (10 per minute)
+
+
+Add message metrics to health endpoint
+
+Testing: Test message lifecycle, concurrent access scenarios.
