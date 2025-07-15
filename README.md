@@ -209,21 +209,6 @@ curl -H "X-API-Key: your-api-key" \
 # ✅ All tests passed! Ready to send notifications.
 ```
 
-### Test Applications
-
-We include full test applications for SDK verification:
-
-- **React Native Test App**: `test-apps/react-native/NotifyLightTestRN/`
-- **Native iOS Test App**: `test-apps/ios-native/NotifyLightTestiOS/`
-- **Mock Server**: `test-apps/utilities/test-server.js`
-
-```bash
-# Start mock server for testing
-node test-apps/utilities/test-server.js
-
-# Run test suite
-./test-apps/utilities/push-tester.sh suite
-```
 
 ## 🔧 Configuration
 
@@ -305,7 +290,7 @@ npm run migrate:postgresql
 - **[API Reference](docs/api-reference.md)** - Complete API documentation
 - **[SDK Guides](docs/sdk/)** - Platform-specific integration guides
 - **[Deployment Guide](docs/deployment.md)** - Production deployment
-- **[Troubleshooting](test-apps/TROUBLESHOOTING.md)** - Common issues and solutions
+- **[Troubleshooting](docs/troubleshooting.md)** - Common issues and solutions
 - **[Contributing](CONTRIBUTING.md)** - How to contribute to NotifyLight
 
 ## 🗺️ Roadmap
@@ -319,7 +304,6 @@ npm run migrate:postgresql
 ### ✅ Stage 2: SDKs (Complete) 
 - React Native SDK
 - Native iOS SDK
-- Test applications
 - Comprehensive documentation
 
 ### 🚧 Stage 3: Production Features (In Progress)

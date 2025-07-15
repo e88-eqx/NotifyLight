@@ -129,7 +129,9 @@ public final class APNSService: NSObject, ObservableObject {
     
     /// Update app badge count
     public func updateBadgeCount(_ count: Int) async {
-        await UIApplication.shared.setApplicationIconBadgeNumber(count)
+        await MainActor.run {
+            UIApplication.shared.applicationIconBadgeNumber = count
+        }
     }
     
     /// Clear app badge
@@ -195,7 +197,11 @@ extension APNSService: UNUserNotificationCenterDelegate {
         notifyEventHandlers(.received(notificationObj))
         
         // Show notification in foreground
-        completionHandler([.banner, .badge, .sound])
+        if #available(iOS 14.0, *) {
+            completionHandler([.banner, .badge, .sound])
+        } else {
+            completionHandler([.alert, .badge, .sound])
+        }
     }
     
     /// Called when user interacts with a notification

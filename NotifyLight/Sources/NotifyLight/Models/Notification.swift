@@ -157,7 +157,7 @@ public struct InAppMessage: Codable {
 }
 
 /// Action button for in-app messages
-public struct MessageAction: Codable {
+public struct MessageAction: Codable, Equatable {
     public let id: String
     public let title: String
     public let style: ActionStyle
@@ -194,6 +194,10 @@ public struct MessageAction: Codable {
         } else {
             data = nil
         }
+    }
+    
+    public static func == (lhs: MessageAction, rhs: MessageAction) -> Bool {
+        return lhs.id == rhs.id && lhs.title == rhs.title && lhs.style == rhs.style
     }
     
     public func encode(to encoder: Encoder) throws {

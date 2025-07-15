@@ -1,6 +1,7 @@
 import SwiftUI
 
 /// SwiftUI-based in-app message view with modern design
+@available(iOS 15.0, *)
 public struct InAppMessageView: View {
     
     // MARK: - Properties
@@ -72,9 +73,10 @@ public struct InAppMessageView: View {
     // MARK: - Background View
     
     private var backgroundView: some View {
-        customization.backgroundMaterial
+        Rectangle()
+            .fill(customization.backgroundMaterial)
             .opacity(backgroundOpacity)
-            .ignoresSafeArea()
+            .edgesIgnoringSafeArea(.all)
             .onTapGesture {
                 if customization.allowBackgroundDismiss {
                     dismiss()
@@ -140,7 +142,7 @@ public struct InAppMessageView: View {
                     .contentShape(Rectangle())
             }
             .accessibilityLabel("Dismiss message")
-            .accessibilityRole(.button)
+            .accessibility(addTraits: .isButton)
         }
         .padding(.top, 12)
         .padding(.horizontal, 16)
@@ -155,7 +157,7 @@ public struct InAppMessageView: View {
             .multilineTextAlignment(.center)
             .lineLimit(customization.titleLineLimit)
             .dynamicTypeSize(customization.maxDynamicTypeSize)
-            .accessibilityRole(.header)
+            .accessibility(addTraits: .isHeader)
     }
     
     // MARK: - Message View
@@ -167,7 +169,7 @@ public struct InAppMessageView: View {
             .multilineTextAlignment(.center)
             .lineLimit(customization.messageLineLimit)
             .dynamicTypeSize(customization.maxDynamicTypeSize)
-            .accessibilityRole(.text)
+            .accessibility(addTraits: .isStaticText)
     }
     
     // MARK: - Action Buttons View
@@ -221,7 +223,7 @@ public struct InAppMessageView: View {
             customization: customization
         ))
         .accessibilityLabel(action.title)
-        .accessibilityRole(.button)
+        .accessibility(addTraits: .isButton)
         .dynamicTypeSize(customization.maxDynamicTypeSize)
     }
     
@@ -231,13 +233,13 @@ public struct InAppMessageView: View {
         DragGesture()
             .onChanged { value in
                 let translation = value.translation
-                if translation.y > 0 {
+                if translation.height > 0 {
                     dragOffset = translation
-                    backgroundOpacity = max(0.3, 1 - translation.y / 200)
+                    backgroundOpacity = max(0.3, 1.0 - Double(translation.height) / 200.0)
                 }
             }
             .onEnded { value in
-                if value.translation.y > 100 {
+                if value.translation.height > 100 {
                     dismiss()
                 } else {
                     withAnimation(customization.dragAnimation) {
@@ -346,6 +348,7 @@ public struct InAppMessageView: View {
 // MARK: - SwiftUI Customization
 
 /// Customization options for SwiftUI in-app message
+@available(iOS 15.0, *)
 public struct InAppMessageSwiftUICustomization {
     
     // MARK: - Colors
@@ -494,10 +497,10 @@ public struct InAppMessageSwiftUICustomization {
         backgroundMaterial: .thin,
         cornerRadius: 8,
         contentPadding: EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16),
+        shadowRadius: 8,
         showDismissButton: false,
         allowBackgroundDismiss: false,
-        enableHapticFeedback: false,
-        shadowRadius: 8
+        enableHapticFeedback: false
     )
     
     public static let card = InAppMessageSwiftUICustomization(
@@ -532,6 +535,7 @@ public enum ActionsLayout {
 }
 
 /// Custom button style for in-app message actions
+@available(iOS 15.0, *)
 private struct InAppMessageButtonStyle: ButtonStyle {
     let style: ActionStyle
     let customization: InAppMessageSwiftUICustomization
@@ -546,6 +550,7 @@ private struct InAppMessageButtonStyle: ButtonStyle {
 
 // MARK: - View Modifiers
 
+@available(iOS 15.0, *)
 extension View {
     /// Presents an in-app message as an overlay
     public func inAppMessage(
@@ -577,11 +582,7 @@ extension View {
 
 extension Animation {
     var duration: Double {
-        switch self {
-        case .easeInOut(let duration), .easeIn(let duration), .easeOut(let duration), .linear(let duration):
-            return duration
-        default:
-            return 0.35 // Default duration
-        }
+        // In iOS 13, Animation doesn't expose duration, so we return a default
+        return 0.35
     }
 }

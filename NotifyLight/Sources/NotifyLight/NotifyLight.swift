@@ -252,6 +252,7 @@ public final class NotifyLight: ObservableObject {
     }
     
     /// Present an in-app message with SwiftUI design
+    @available(iOS 15.0, *)
     public func presentMessage(
         _ message: InAppMessage,
         swiftUICustomization: InAppMessageSwiftUICustomization,

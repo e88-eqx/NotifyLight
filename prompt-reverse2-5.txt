@@ -1,0 +1,60 @@
+# NotifyLight Project: Revert Test Applications (Prompt 2-5)
+
+## Context
+I'm working on NotifyLight, a lightweight notification platform. Previously, I had test applications created per prompt 2-5, but I need to revert this work and clean up the project structure.
+
+## Task: Clean Reversion of Test Applications
+
+### What to Remove
+**Delete these directories and all contents:**
+- `test-apps/` (entire directory)
+  - `test-apps/react-native/`
+  - `test-apps/ios-native/`
+  - `test-apps/utilities/`
+  - `test-apps/docs/`
+
+**Remove from documentation:**
+- Any references to test applications in README files
+- Links to test app setup guides
+- Testing procedures that reference the removed apps
+
+### What to Preserve
+**Keep all core project files:**
+- SDK source code (React Native, iOS SDKs)
+- Backend/server code
+- Core documentation (API docs, main README)
+- Docker configuration
+- Package.json files for SDKs
+- Git history and commit messages
+
+### Git Operations Required
+1. **Clean removal**: `git rm -r test-apps/`
+2. **Update .gitignore**: Remove any test-app specific ignores
+3. **Commit message**: "Revert: Remove test applications from prompt 2-5"
+
+### Documentation Updates
+**Update main README.md:**
+- Remove sections about test applications
+- Remove setup instructions that reference test apps
+- Keep core SDK integration examples (if any)
+
+**Update any SDK documentation:**
+- Remove references to test app examples
+- Keep simple integration snippets inline
+
+### Verification Steps
+After reversion, verify:
+- [ ] No test-apps/ directory exists
+- [ ] No broken links in documentation
+- [ ] Core SDK files are intact
+- [ ] Git history is preserved
+- [ ] Project builds successfully
+- [ ] No orphaned configuration files
+
+## Expected Outcome
+Clean project structure focused on core NotifyLight platform without test application bloat. The project should be ready for proper MVP development following the roadmap.
+
+## Notes
+- This is a feature branch, so no backward compatibility concerns
+- Focus on clean, minimal structure aligned with "radical simplicity" principle
+- If any testing infrastructure is needed later, we'll build it purpose-built for actual needs

@@ -1,0 +1,6 @@
+{
+  "title": "🎉 Hello from NotifyLight!",
+  "message": "Your first notification is working perfectly!",
+  "users": ["test-user"],
+  "type": "push"
+}
